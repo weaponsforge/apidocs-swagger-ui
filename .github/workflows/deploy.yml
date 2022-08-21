@@ -39,7 +39,6 @@ jobs:
       - name: Set the production server api URL
         run: |
           sed -i -e 's,http://localhost:3001/api,${{ secrets.BASE_API_URL }},g' docs/src/swagger/swagger-config.yaml
-          ls -l -a
           git status
       - name: Build with webpack
         run: |
@@ -96,5 +95,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/dist
+          publish_dir: ./
           publish_branch: gh-pages

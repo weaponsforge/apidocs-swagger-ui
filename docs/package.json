@@ -1,0 +1,27 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "This `webpack-getting-started` sample is for reference only.",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --open --mode development"
+  },
+  "author": "weaponsforge",
+  "license": "ISC",
+  "dependencies": {
+    "css-loader": "^6.7.1",
+    "json-loader": "^0.5.7",
+    "style-loader": "^3.3.1",
+    "swagger-ui": "^4.14.0",
+    "yaml-loader": "^0.8.0"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.10.0"
+  }
+}

@@ -6,6 +6,7 @@ const app = express()
 const PORT = process.env.PORT || 3001
 
 const { corsOptions } = require('./utils/cors_options')
+const controllers = require('./controllers')
 require('./utils/db')
 
 // Initialize the express app
@@ -13,12 +14,14 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
-if (process.env.ALLOW_CORS === 1) {
+if (process.env.ALLOW_CORS === '1') {
   app.use(cors(corsOptions))
 }
 
-app.use('/hello', (req, res) => {
-  return res.status(200).send('Hello, World!')
+app.use('/api', controllers)
+
+app.get('*', (req, res) => {
+  return res.status(200).send('Welcome to the Todo API')
 })
 
 app.use((err, req, res, next) => {

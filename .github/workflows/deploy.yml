@@ -90,6 +90,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: main-out
+      - name: List files for publish
+        run: ls -l -a
       - name: Deploy to Github Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

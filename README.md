@@ -1,6 +1,8 @@
 ## apidocs-swagger-ui
 
-**apidocs-swagger-ui** contains a simple Todo notes-taking API borrowed from [`todo-next`](https://github.com/weaponsforge/todo-next). This repository aims to test using [swagger-ui](https://github.com/swagger-api/swagger-ui) for creating a REST API documentation and to familiarize oneself with [OpenAPI](https://spec.openapis.org/oas/v3.1.0), v3.1.0 as of this writing.
+**apidocs-swagger-ui** contains a simple Todo notes-taking API borrowed from [`todo-next`](https://github.com/weaponsforge/todo-next).
+
+This repository aims to test using [swagger-ui](https://github.com/swagger-api/swagger-ui) for creating an modern, responsive and interactive REST API documentations and to familiarize oneself with the [OpenAPI](https://spec.openapis.org/oas/v3.1.0) specifications, v3.1.0 as of this writing.
 
 ## Requirements
 
@@ -20,10 +22,13 @@ The following dependencies are used for this project's localhost development env
 1. Clone this repository.<br>
 `https://github.com/weaponsforge/todo-next.git`
 
-2. Install dependencies.<br>
+2. Install the backend server dependencies.<br>
 `npm install`
 
-3. Set up the environment variables. Create a `.env `file inside the **/server** directory with reference to the `.env.example` file.<br>
+3. Install the **docs** dependencies.<br>
+`npm run docs:install`
+
+4. Set up the environment variables. Create a `.env `file inside the **/server** directory with reference to the `.env.example` file.<br>
 
    | Variable Name   | Description                                                                                                                                                                                                                                                                                                       |
    | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -33,8 +38,11 @@ The following dependencies are used for this project's localhost development env
 
 ## Usage
 
-1. Run the app.<br>
+1. Run the server.<br>
 `npm start`
+
+1. Run the docs api on development mode.<br>
+`npm run docs:dev`
 
 ## Available Scripts
 
@@ -52,7 +60,7 @@ Lint the server JavaScript source codes.
 
 ### `npm run lint:fix`
 
-Fix JavaScript lint errors.
+Fix the JavaScript lint errors.
 
 ### `npm run docs:install`
 
@@ -64,7 +72,7 @@ Runs the (swagger-ui + webpack) app in development mode.
 
 ### `npm run docs:build`
 
-Builds the (swagger-ui + webpack) app in the **/docs** directory for production mode.
+Builds and bundles the (swagger-ui + webpack) app in the **/docs** directory for production mode to the `/docs/dist` directory.
 
 Fix JavaScript lint errors.
 

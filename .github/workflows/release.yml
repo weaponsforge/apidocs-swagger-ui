@@ -3,9 +3,8 @@ name: Deploy to Production Environment
 # This workflow will trigger on any tag/release created on *any* branch
 # Make sure to create tags/releases only from the "master" branch for consistency
 on:
-  push:
-    branches-ignore:
-      - 'master'
+  release:
+    types: [published]
 
 jobs:
   lint-app:

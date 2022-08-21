@@ -6,8 +6,8 @@ on:
       - 'master'
 
 jobs:
-  lint-server:
-    name: Lint Server
+  lint-app:
+    name: Lint Server and Docs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -21,9 +21,33 @@ jobs:
           npm install
           npm run lint
 
+  build-docs:
+    name: Build the API documentation
+    needs: lint-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Use NodeJS v16.14.2
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.14.2
+      - name: Install Dependencies
+        run: npm run docs:install
+      - name: Build with webpack
+        run: npm run docs:build
+      - name: Package static website
+        run: tar cvfz website.tar.gz dist/
+      - name: Archive Development Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: main-out
+          path: website.tar.gz
+          retention-days: 3
+
   deploy-server:
     name: Deploy Server to Heroku
-    needs: lint-server
+    needs: lint-app
     runs-on: ubuntu-latest
     env:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
@@ -46,3 +70,21 @@ jobs:
       - run: heroku git:remote -a $HEROKU_APP
       - run: git push heroku HEAD:refs/heads/master
       - run: rm -r -f .netrc
+
+  deploy-docs:
+    name: Deploy Docs
+    needs: build-docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: main-out
+      - name: Extract Artifact Files
+        run: tar -zxvf website.tar.gz
+      - name: Deploy to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages

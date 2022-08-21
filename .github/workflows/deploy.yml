@@ -42,14 +42,17 @@ jobs:
           ls -l -a
           git status
       - name: Build with webpack
-        run: npm run docs:build
+        run: |
+          npm run docs:build
+          cd docs/dist
+          ls -l -a
       - name: Disable Jekyll
         run: touch docs/dist/.nojekyll
       - name: Archive Development Artifact
         uses: actions/upload-artifact@v3
         with:
           name: main-out
-          path: /docs/dist
+          path: docs/dist
           retention-days: 3
 
   deploy-server:
@@ -91,5 +94,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./docs/dist
           publish_branch: gh-pages

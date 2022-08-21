@@ -37,7 +37,7 @@ jobs:
       - name: Install Dependencies
         run: npm run docs:install
       - name: Set the production server URL
-        run: sed -i -e "s/http://localhost:3001/api/${{ secrets.BASE_API_URL }}/g" docs/src/swagger-config.yaml
+        run: sed -i -e 's,http://localhost:3001/api,${{ secrets.BASE_API_URL }},g' docs/src/swagger/swagger-config.yaml
       - name: Build with webpack
         run: npm run docs:build
       - name: Package static website

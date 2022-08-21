@@ -12,3 +12,9 @@ It includes CSS and OAuth configuration.
     rename `_sample_package.json` to `package.json`
     npm install
     npm start
+
+> **NOTE**<br><br>
+> The `webpack-getting-started` files are originally from<br>
+> https://github.com/swagger-api/swagger-ui/tree/master/docs/samples/webpack-getting-started<br><br>
+> @weaponsforge
+> 20220821

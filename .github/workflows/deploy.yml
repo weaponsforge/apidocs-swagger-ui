@@ -25,6 +25,8 @@ jobs:
     name: Build the API documentation
     needs: lint-app
     runs-on: ubuntu-latest
+    env:
+      BASE_API_URL: ${{ secrets.BASE_API_URL }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
@@ -34,6 +36,8 @@ jobs:
           node-version: 16.14.2
       - name: Install Dependencies
         run: npm run docs:install
+      - name: Set the production server URL
+        run: sed -i -e "s/http://localhost:3001/api/${{ secrets.BASE_API_URL }}/g" docs/src/swagger-config.yaml
       - name: Build with webpack
         run: npm run docs:build
       - name: Package static website

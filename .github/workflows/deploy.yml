@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-      - name: Fetch unshallow repo
-        run: git fetch --prune --tags --unshallow
       - name: Use NodeJS v16.14.2
         uses: actions/setup-node@v3
         with:
@@ -34,6 +32,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
+      - name: Fetch unshallow repo
+        run: git fetch --prune --tags --unshallow
       - run: |
           cat >~/.netrc <<EOF
           machine api.heroku.com

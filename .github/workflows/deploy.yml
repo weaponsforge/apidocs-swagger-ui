@@ -40,6 +40,8 @@ jobs:
         run: sed -i -e 's,http://localhost:3001/api,${{ secrets.BASE_API_URL }},g' docs/src/swagger/swagger-config.yaml
       - name: Build with webpack
         run: npm run docs:build
+      - name: Disable Jekyll
+        run: touch docs/dist/.nojekyll
       - name: Package static website
         run: tar cvfz website.tar.gz docs/dist/
       - name: Archive Development Artifact

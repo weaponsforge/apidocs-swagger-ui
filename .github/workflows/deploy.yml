@@ -1,0 +1,100 @@
+name: Deploy to Production Environment
+
+# This workflow will trigger on any tag/release created on *any* branch
+# Make sure to create tags/releases only from the "master" branch for consistency
+on:
+  release:
+    types: [published]
+
+jobs:
+  lint-app:
+    name: Lint Server and Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Use NodeJS v16.14.2
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.14.2
+      - name: Install Dependencies and lint
+        run: |
+          npm install
+          npm run lint
+
+  build-docs:
+    name: Build the API documentation
+    needs: lint-app
+    runs-on: ubuntu-latest
+    env:
+      BASE_API_URL: ${{ secrets.BASE_API_URL }}
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Use NodeJS v16.14.2
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.14.2
+      - name: Install Dependencies
+        run: npm run docs:install
+      - name: Set the production server api URL
+        run: |
+          sed -i -e 's,http://localhost:3001/api,${{ secrets.BASE_API_URL }},g' docs/src/swagger/swagger-config.yaml
+          git status
+      - name: Build with webpack
+        run: |
+          npm run docs:build
+          cd docs/dist
+          ls -l -a
+      - name: Disable Jekyll
+        run: touch docs/dist/.nojekyll
+      - name: Archive Development Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: main-out
+          path: docs/dist
+          retention-days: 3
+
+  deploy-server:
+    name: Deploy Server to Heroku
+    needs: lint-app
+    runs-on: ubuntu-latest
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+      HEROKU_APP: ${{ secrets.HEROKU_APP }}
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Fetch unshallow repo
+        run: git fetch --prune --tags --unshallow
+      - run: |
+          cat >~/.netrc <<EOF
+          machine api.heroku.com
+            login $HEROKU_EMAIL
+            password $HEROKU_API_KEY
+          machine git.heroku.com
+            login $HEROKU_EMAIL
+            password $HEROKU_API_KEY
+          EOF
+      - run: heroku git:remote -a $HEROKU_APP
+      - run: git push heroku HEAD:refs/heads/master
+      - run: rm -r -f .netrc
+
+  deploy-docs:
+    name: Deploy Docs to Github Pages
+    needs: build-docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: main-out
+      - name: List files for publish
+        run: ls -l -a
+      - name: Deploy to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages

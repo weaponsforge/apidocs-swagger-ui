@@ -10,7 +10,7 @@ router.post('/todo', Todo.createTodo)
 router.patch('/todo', Todo.updateTodo)
 
 // Delete a Tod item by ID
-router.delete('/todo', Todo.deleteTodo)
+router.delete('/todo/:id', Todo.deleteTodo)
 
 // Retrieve the data of a Todo item
 router.get('/todo/:id', Todo.getTodo)

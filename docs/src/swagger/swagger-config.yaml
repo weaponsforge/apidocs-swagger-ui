@@ -89,7 +89,6 @@ paths:
           required: true
           schema:
             type: string
-            format: alphanumeric
       responses:
         '200':
           description: Successful delete operation
@@ -112,7 +111,6 @@ paths:
           required: true
           schema:
             type: string
-            format: alphanumeric
       responses:
         '200':
           description: Successful operation
@@ -151,7 +149,6 @@ components:
       properties:
         _id:
           type: string
-          format: alphanumeric
           example: ggdasu34773647f
         title:
           type: string

@@ -6,8 +6,11 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon watch src/index.js",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+    "lint": "eslint src docs",
+    "lint:fix": "eslint src docs --fix",
+    "docs:install": "cd docs && npm install",
+    "docs:dev": "cd docs && npm start",
+    "docs:build": "cd docs && npm run build"
   },
   "author": "weaponsforge",
   "license": "ISC",

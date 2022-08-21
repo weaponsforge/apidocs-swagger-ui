@@ -19,6 +19,13 @@ The following dependencies are used for this project's localhost development env
    - version 4.4.0
    - architecture: x86_64
 
+### Core Libraries and Frameworks
+
+1. swagger-ui v4.14.0
+2. webpack v5.74.0
+3. webpack-cli v4.10.0
+4. mongoose v6.5.2
+
 ## Installation
 
 1. Clone this repository.<br>

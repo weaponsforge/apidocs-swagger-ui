@@ -1,0 +1,46 @@
+name: Deploy to Production Environment
+
+on:
+  push:
+    branches-ignore:
+      - 'master'
+
+jobs:
+  lint-server:
+    name: Lint Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - name: Use NodeJS v16.14.2
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.14.2
+      - name: Install Dependencies and lint
+        run: |
+          npm install
+          npm run lint
+
+  deploy-server:
+    name: Deploy Server to Heroku
+    needs: lint-server
+    runs-on: ubuntu-latest
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+      HEROKU_APP: ${{ secrets.HEROKU_APP }}
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+      - run: |
+          cat >~/.netrc <<EOF
+          machine api.heroku.com
+            login $HEROKU_EMAIL
+            password $HEROKU_API_KEY
+          machine git.heroku.com
+            login $HEROKU_EMAIL
+            password $HEROKU_API_KEY
+          EOF
+      - run: heroku git:remote -a $HEROKU_APP
+      - run: git push heroku HEAD:refs/heads/master
+      - run: rm -r -f .netrc

@@ -37,7 +37,7 @@ jobs:
       - name: Build with webpack
         run: npm run docs:build
       - name: Package static website
-        run: tar cvfz website.tar.gz dist/
+        run: tar cvfz website.tar.gz docs/dist/
       - name: Archive Development Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -72,7 +72,7 @@ jobs:
       - run: rm -r -f .netrc
 
   deploy-docs:
-    name: Deploy Docs
+    name: Deploy Docs to Github Pages
     needs: build-docs
     runs-on: ubuntu-latest
     steps:
@@ -86,5 +86,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./docs/dist/
           publish_branch: gh-pages

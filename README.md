@@ -1,8 +1,10 @@
 ## apidocs-swagger-ui
 
-**apidocs-swagger-ui** contains a simple Todo notes-taking API borrowed from [`todo-next`](https://github.com/weaponsforge/todo-next).
+**apidocs-swagger-ui** features a simple Todo notes-taking CRUP API borrowed from [`todo-next`](https://github.com/weaponsforge/todo-next)'s server.
 
 This repository aims to test using [swagger-ui](https://github.com/swagger-api/swagger-ui) for creating an modern, responsive and interactive REST API documentations and to familiarize oneself with the [OpenAPI](https://spec.openapis.org/oas/v3.1.0) specifications, v3.1.0 as of this writing.
+
+![screenshot](/assets/thumbnail.png)
 
 ## Requirements
 
@@ -28,7 +30,7 @@ The following dependencies are used for this project's localhost development env
 3. Install the **docs** dependencies.<br>
 `npm run docs:install`
 
-4. Set up the environment variables. Create a `.env `file inside the **/server** directory with reference to the `.env.example` file.<br>
+4. Set up the environment variables. Create a `.env `file inside the root project directory with reference to the `.env.example` file.<br>
 
    | Variable Name   | Description                                                                                                                                                                                                                                                                                                       |
    | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

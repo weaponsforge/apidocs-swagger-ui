@@ -36,7 +36,7 @@ jobs:
           node-version: 16.14.2
       - name: Install Dependencies
         run: npm run docs:install
-      - name: Set the production server URL
+      - name: Set the production server api URL
         run: |
           sed -i -e 's,http://localhost:3001/api,${{ secrets.BASE_API_URL }},g' docs/src/swagger/swagger-config.yaml
           ls -l -a
@@ -45,13 +45,11 @@ jobs:
         run: npm run docs:build
       - name: Disable Jekyll
         run: touch docs/dist/.nojekyll
-      - name: Package static website
-        run: tar cvfz website.tar.gz docs/dist/
       - name: Archive Development Artifact
         uses: actions/upload-artifact@v3
         with:
           name: main-out
-          path: website.tar.gz
+          path: /docs/dist
           retention-days: 3
 
   deploy-server:
@@ -89,11 +87,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: main-out
-      - name: Extract Artifact Files
-        run: tar -zxvf website.tar.gz
       - name: Deploy to Github Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/dist/
+          publish_dir: ./dist
           publish_branch: gh-pages

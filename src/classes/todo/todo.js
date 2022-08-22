@@ -32,8 +32,7 @@ class Todo {
    * @returns {Object} Updated Todo
    */
   async updatetodo (params) {
-    const id = params._id
-    const keys = ['title', 'description', 'content']
+    const keys = ['id', 'title', 'description', 'content']
 
     const data = keys.reduce((acc, item) => {
       if (params[item] !== undefined) {
@@ -45,7 +44,7 @@ class Todo {
 
     try {
       const result = await TodoSchema.findOneAndUpdate(
-        { _id: id },
+        { _id: data.id },
         data,
         { returnOriginal: false }
       )

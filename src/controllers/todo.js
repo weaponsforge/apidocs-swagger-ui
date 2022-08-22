@@ -19,11 +19,11 @@ module.exports.createTodo = async (req, res, next) => {
 
 // Update an existing Todo document
 module.exports.updateTodo = async (req, res, next) => {
-  const { _id, title, description, content } = req.body
+  const { id, title, description, content } = req.body
 
   try {
     const doc = await Todo.updatetodo({
-      _id,
+      id,
       title,
       description,
       content

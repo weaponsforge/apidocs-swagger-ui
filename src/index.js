@@ -1,4 +1,6 @@
 require('dotenv').config()
+require('./utils/db')
+
 const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
@@ -8,7 +10,6 @@ const PORT = process.env.PORT || 3001
 
 const { corsOptions } = require('./utils/cors_options')
 const controllers = require('./controllers')
-require('./utils/db')
 
 // Enable if you're behind a reverse proxy (i.e., Heroku)
 app.set('trust proxy', 1)

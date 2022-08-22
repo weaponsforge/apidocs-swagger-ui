@@ -35,6 +35,10 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Todo'
+            example:
+              title: Read a Book
+              description: Read books about the Earth
+              content: Earth is the 3rd planet on the solar system, 3/4 made up of water
         required: true
       responses:
         '200':
@@ -56,11 +60,16 @@ paths:
       description: Update an existing Todo by ID
       operationId: updateTodo
       requestBody:
-        description: Update an existing Todo in the database. The `_id` field is required while the `title`, `description` and `content` fields are optional.
+        description: Update an existing Todo in the database. The `id` field is required while the `title`, `description` and `content` fields are optional.
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Todo'
+            example:
+              id: 63027bf42e28a411ed43b440
+              title: Play a Game
+              description: Games to play this week
+              content: Choices are tic-tac-toe, hide and seek and jumping rope
         required: true
       responses:
         '200':
@@ -80,7 +89,7 @@ paths:
       tags:
         - todo
       summary: Deletes a Todo
-      descriptionn: Delete a Todo
+      description: Delete a Todo by ID. Returns the data of a deleted Todo, on successful deletion.
       operationId: deleteTodo
       parameters:
         - name: id
@@ -149,7 +158,7 @@ components:
       properties:
         _id:
           type: string
-          example: ggdasu34773647f
+          example: 63027c032e28a411ed43b442
         title:
           type: string
           example: My Favorite Things
@@ -159,6 +168,12 @@ components:
         content:
           type: string
           example: The things I love in this world is Brownie and you.
+        createdAt:
+          type: date-time
+          example: 2022-08-21T18:40:03.512Z
+        updatedAt:
+          type: date-time
+          example: 2022-08-22T11:06:09.245Z
   requestBodies:
     Todo:
       description: Todo object that needs to be added to the database

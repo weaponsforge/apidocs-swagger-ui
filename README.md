@@ -2,7 +2,7 @@
 
 **apidocs-swagger-ui** features a simple Todo notes-taking CRUP API borrowed from [`todo-next`](https://github.com/weaponsforge/todo-next)'s server.
 
-This repository aims to test using [swagger-ui](https://github.com/swagger-api/swagger-ui) for creating an modern, responsive and interactive REST API documentations and to familiarize oneself with the [OpenAPI](https://spec.openapis.org/oas/v3.1.0) specifications, v3.1.0 as of this writing.
+This repository aims to test using [swagger-ui](https://github.com/swagger-api/swagger-ui) for creating modern, responsive and interactive REST API documentations and to familiarize oneself with the [OpenAPI](https://spec.openapis.org/oas/v3.1.0) specifications, v3.1.0 as of this writing.
 
 ![screenshot](/assets/thumbnail.png)
 

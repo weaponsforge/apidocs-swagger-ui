@@ -15,8 +15,8 @@ const controllers = require('./controllers')
 app.set('trust proxy', 1)
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 12, // limit each IP to 12 requests per windowMs
+  windowMs: process.env.API_WINDOW_MS_MINUTES * 60 * 1000, // in minutes
+  max: process.env.API_RATE_LIMIT, // limit each IP to API_RATE_LIMIT requests per windowMs
   message: 'Too many requests from this IP. Please try again after 15 minutes.'
 })
 
